@@ -8,7 +8,9 @@ SET time_zone = "+00:00";
 -- Table structure for table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -27,7 +29,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Table structure for table `products`
 --
 
-CREATE TABLE IF NOT EXISTS `products` (
+DROP TABLE IF EXISTS `products`;
+
+CREATE TABLE `products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `description` text,
@@ -46,7 +50,9 @@ CREATE TABLE IF NOT EXISTS `products` (
 -- Table structure for table `product_images`
 --
 
-CREATE TABLE IF NOT EXISTS `product_images` (
+DROP TABLE IF EXISTS `product_images`;
+
+CREATE TABLE `product_images` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `product_id` int(11) NOT NULL,
     `image_path` varchar(255) NOT NULL,
@@ -60,7 +66,9 @@ CREATE TABLE IF NOT EXISTS `product_images` (
 -- Table structure for table `licenses`
 --
 
-CREATE TABLE IF NOT EXISTS `licenses` (
+DROP TABLE IF EXISTS `licenses`;
+
+CREATE TABLE `licenses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -79,7 +87,9 @@ CREATE TABLE IF NOT EXISTS `licenses` (
 -- Table structure for table `license_logs`
 --
 
-CREATE TABLE IF NOT EXISTS `license_logs` (
+DROP TABLE IF EXISTS `license_logs`;
+
+CREATE TABLE `license_logs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `license_id` int(11) DEFAULT NULL,
   `license_key` varchar(64) NOT NULL,
@@ -96,7 +106,9 @@ CREATE TABLE IF NOT EXISTS `license_logs` (
 -- Table structure for table `orders`
 --
 
-CREATE TABLE IF NOT EXISTS `orders` (
+DROP TABLE IF EXISTS `orders`;
+
+CREATE TABLE `orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -114,7 +126,9 @@ CREATE TABLE IF NOT EXISTS `orders` (
 -- Table structure for table `pages`
 --
 
-CREATE TABLE IF NOT EXISTS `pages` (
+DROP TABLE IF EXISTS `pages`;
+
+CREATE TABLE `pages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
@@ -131,7 +145,9 @@ CREATE TABLE IF NOT EXISTS `pages` (
 -- Table structure for table `settings`
 --
 
-CREATE TABLE IF NOT EXISTS `settings` (
+DROP TABLE IF EXISTS `settings`;
+
+CREATE TABLE `settings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key_name` varchar(100) NOT NULL,
   `value` text,
