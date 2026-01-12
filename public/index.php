@@ -7,6 +7,10 @@ require_once '../app/Core/Controller.php';
 require_once '../app/Core/Model.php';
 require_once '../app/Core/Router.php';
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Autoloader (Optional implementation if classes grow)
 spl_autoload_register(function ($class) {
     $prefix = 'App\\';

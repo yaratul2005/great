@@ -64,7 +64,7 @@
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen fade-in">
+<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
     
     <!-- Navbar -->
     <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
