@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /great/public/
+
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [L]
+    
+    # Increase Upload Limits (If server allows)
+    <IfModule mod_php.c>
+        php_value upload_max_filesize 1000M
+        php_value post_max_size 1000M
+        php_value memory_limit 1024M
+    </IfModule>
+</IfModule>
