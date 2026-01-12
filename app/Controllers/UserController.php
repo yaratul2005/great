@@ -49,4 +49,86 @@ class UserController extends Controller {
             echo "Failed to generate license.";
         }
     }
+
+    public function profile() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $userId = $_SESSION['user_id'];
+        $userModel = new \App\Models\User();
+        $user = $userModel->getUserById($userId);
+        
+        $this->view('user/profile', ['user' => $user]);
+    }
+
+    public function updateProfile() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userId = $_SESSION['user_id'];
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            
+            $userModel = new \App\Models\User();
+            if ($userModel->updateProfile($userId, $name, $email)) {
+                // Update Session Name
+                $_SESSION['user_name'] = $name;
+                $this->redirect('/profile?success=profile_updated');
+            } else {
+                $this->redirect('/profile?error=update_failed');
+            }
+        }
+    }
+
+    public function updatePassword() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userId = $_SESSION['user_id'];
+            $newPassword = $_POST['new_password'];
+            
+            // Should validate confirm password etc, but keep simple
+            $userModel = new \App\Models\User();
+            if ($userModel->updatePassword($userId, $newPassword)) {
+                $this->redirect('/profile?success=password_updated');
+            } else {
+                $this->redirect('/profile?error=update_failed');
+            }
+        }
+    }
+
+    public function invoices() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $userId = $_SESSION['user_id'];
+        $orderModel = new \App\Models\Order();
+        $orders = $orderModel->getByUser($userId);
+        
+        $this->view('user/invoices', ['orders' => $orders]);
+    }
+
+    public function downloadInvoice() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $orderId = $_GET['id'] ?? null;
+        if (!$orderId) {
+            die("Order ID required");
+        }
+        
+        $userId = $_SESSION['user_id'];
+        $orderModel = new \App\Models\Order();
+        $order = $orderModel->getById($orderId);
+        
+        if (!$order || $order['user_id'] != $userId) {
+            die("Invoice not found or access denied.");
+        }
+        
+        // Render print view (no header/footer)
+        extract(['order' => $order]);
+        require_once dirname(__DIR__) . '/Views/user/invoice_print.php';
+    }
 }

@@ -24,9 +24,23 @@ class Order extends Model {
     }
     
     public function getById($id) {
-        $sql = "SELECT * FROM orders WHERE id = :id";
+        $sql = "SELECT o.*, p.title as product_title, p.description as product_desc, u.name as user_name, u.email as user_email 
+                FROM orders o 
+                JOIN products p ON o.product_id = p.id 
+                JOIN users u ON o.user_id = u.id 
+                WHERE o.id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([':id' => $id]);
         return $stmt->fetch();
+    }
+
+    public function getByUser($userId) {
+        $sql = "SELECT o.*, p.title as product_title FROM orders o 
+                JOIN products p ON o.product_id = p.id 
+                WHERE o.user_id = :uid AND o.status = 'paid' 
+                ORDER BY o.created_at DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':uid' => $userId]);
+        return $stmt->fetchAll();
     }
 }

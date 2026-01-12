@@ -1,9 +1,20 @@
 <?php require_once '../app/Views/layouts/header.php'; ?>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">My Dashboard</h1>
-        <p class="text-gray-500">Manage your products and active licenses.</p>
+    <div class="mb-8 flex justify-between items-center">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900">My Dashboard</h1>
+            <p class="text-gray-500">Manage your products and active licenses.</p>
+        </div>
+        <div class="space-x-4">
+             <a href="<?= url('/invoices') ?>" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-200 transition">
+                📜 My Orders
+            </a>
+             <a href="<?= url('/profile') ?>" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-200 transition">
+                👤 My Profile
+            </a>
+            <a href="<?= url('/logout') ?>" class="text-red-500 hover:text-red-700">Logout</a>
+        </div>
     </div>
 
     <?php if (empty($licenses)): ?>

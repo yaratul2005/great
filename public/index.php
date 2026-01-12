@@ -37,6 +37,10 @@ $router->add('GET', 'login', 'AuthController', 'login');
 $router->add('POST', 'login', 'AuthController', 'login');
 $router->add('GET', 'logout', 'AuthController', 'logout');
 $router->add('GET', 'activate', 'AuthController', 'activate');
+$router->add('GET', 'forgot-password', 'AuthController', 'forgotPassword');
+$router->add('POST', 'forgot-password', 'AuthController', 'forgotPassword');
+$router->add('GET', 'reset-password', 'AuthController', 'resetPassword');
+$router->add('POST', 'reset-password', 'AuthController', 'resetPassword');
 
 // Admin Routes
 $router->add('GET', '/admin/dashboard', 'AdminController', 'dashboard');
@@ -60,7 +64,14 @@ $router->add('POST', '/webhook/stripe', 'WebhookController', 'stripe');
 
 // User Routes
 $router->add('GET', 'dashboard', 'UserController', 'dashboard');
+$router->add('GET', 'dashboard', 'UserController', 'dashboard');
 $router->add('GET', 'purchase', 'UserController', 'purchase');
+$router->add('GET', 'profile', 'UserController', 'profile');
+$router->add('GET', 'profile/update', 'UserController', 'updateProfile'); // Fallback logic often handles POST via same URL but safer to split or ensure Router handles it
+$router->add('POST', 'profile/update', 'UserController', 'updateProfile');
+$router->add('POST', 'profile/password', 'UserController', 'updatePassword');
+$router->add('GET', 'invoices', 'UserController', 'invoices');
+$router->add('GET', 'invoice/print', 'UserController', 'downloadInvoice');
 
 // Admin Pages
 $router->add('GET', '/admin/pages', 'AdminController', 'pages');

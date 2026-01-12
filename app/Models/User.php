@@ -56,4 +56,45 @@ class User extends Model {
         $stmt->execute([':id' => $id]);
         return $stmt->fetch();
     }
+
+    public function setResetToken($email, $token) {
+        // Set expiry to 1 hour from now
+        $expires = date('Y-m-d H:i:s', strtotime('+1 hour'));
+        
+        $sql = "UPDATE users SET reset_token = :token, reset_expires = :expires WHERE email = :email";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':token' => $token, ':expires' => $expires, ':email' => $email]);
+        
+        return $stmt->rowCount() > 0;
+    }
+
+    public function validateResetToken($token) {
+        $sql = "SELECT id FROM users WHERE reset_token = :token AND reset_expires > NOW()";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':token' => $token]);
+        return $stmt->fetch();
+    }
+
+    public function resetPassword($token, $newPassword) {
+        $passwordHash = password_hash($newPassword, PASSWORD_BCRYPT);
+        
+        $sql = "UPDATE users SET password_hash = :hash, reset_token = NULL, reset_expires = NULL WHERE reset_token = :token AND reset_expires > NOW()";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':hash' => $passwordHash, ':token' => $token]);
+        
+        return $stmt->rowCount() > 0;
+    }
+
+    public function updatePassword($userId, $newPassword) {
+        $passwordHash = password_hash($newPassword, PASSWORD_BCRYPT);
+        $sql = "UPDATE users SET password_hash = :hash WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([':hash' => $passwordHash, ':id' => $userId]);
+    }
+
+    public function updateProfile($userId, $name, $email) {
+        $sql = "UPDATE users SET name = :name, email = :email WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([':name' => $name, ':email' => $email, ':id' => $userId]);
+    }
 }

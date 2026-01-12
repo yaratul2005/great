@@ -6,10 +6,10 @@ use PDO;
 use PDOException;
 
 class Database {
-    private $host = 'localhost';
-    private $db_name = 'greatbd'; // Change this to your actual DB name
-    private $username = 'root'; // Change this
-    private $password = ''; // Change this
+    private $host = 'sdb-83.hosting.stackcp.net';
+    private $db_name = 'greatdb-35303934d481'; // Change this to your actual DB name
+    private $username = 'greatdb-35303934d481'; // Change this
+    private $password = 'nria5jlnf7'; // Change this
     public $conn;
 
     public function getConnection() {
