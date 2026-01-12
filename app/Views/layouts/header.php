@@ -5,10 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <?php
-    // Fetch Settings if not available
-    if (!isset($globalSettings)) {
-        $settingModel = new \App\Models\Setting();
-        $globalSettings = $settingModel->getAll();
+    $globalSettings = [];
+    try {
+        if (!isset($globalSettings) || empty($globalSettings)) {
+            $settingModel = new \App\Models\Setting();
+            // Check connection first if possible, or just try
+            $globalSettings = $settingModel->getAll();
+        }
+    } catch (\Throwable $e) {
+        // Fallback if DB fails
+        $globalSettings = [
+            'site_name' => 'Great Ten Info',
+            'site_description' => 'Site is under maintenance',
+        ];
+        // echo "<!-- DB Error: " . $e->getMessage() . " -->"; 
     }
     
     // Page Specific Overrides
@@ -28,20 +38,17 @@
     <!-- Custom Head Code -->
     <?= $globalSettings['custom_head_code'] ?? '' ?>
     
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Using version 3.4.1 explicitly -->
+    <script src="https://cdn.tailwindcss.com?v=3.4.1"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#000000', // Black
-                        secondary: '#ffffff', // White
-                        accent: '#3b82f6', // Blue-500
-                        'accent-dark': '#1e40af', // Blue-800
-                    },
-                    backgroundImage: {
-                        'hero-pattern': "linear-gradient(to right bottom, #ffffff, #f3f4f6, #3b82f6)",
-                        'blue-gradient': "linear-gradient(90deg, #1e3a8a 0%, #3b82f6 100%)",
+                        primary: '#000000',
+                        secondary: '#ffffff',
+                        accent: '#3b82f6',
+                        'accent-dark': '#1e40af',
                     }
                 }
             }
