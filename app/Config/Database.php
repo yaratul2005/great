@@ -6,10 +6,11 @@ use PDO;
 use PDOException;
 
 class Database {
-    private $host = 'sdb-83.hosting.stackcp.net';
-    private $db_name = 'greatdb-35303934d481'; // Change this to your actual DB name
-    private $username = 'greatdb-35303934d481'; // Change this
-    private $password = 'nria5jlnf7'; // Change this
+    // Configuration: Update these with your live credentials
+    private $host = 'sdb-83.hosting.stackcp.net'; // Use 127.0.0.1 instead of localhost to force TCP
+    private $db_name = 'greatdb-35303934d481'; 
+    private $username = 'greatdb-35303934d481'; 
+    private $password = 'z>~96da[hMxk'; 
     public $conn;
 
     public function getConnection() {
